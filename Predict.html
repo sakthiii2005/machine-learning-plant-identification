@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predict</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: "Times New Roman", Times, serif;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        color: gray;
+        text-align: center;
+        margin-top: 60px;
+        margin-bottom: 30px;
+      }
+      h2 {
+        color: MediumSeaGreen;
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      .list-container ul li {
+        color: gray;
+        font-size: 18px;
+        margin-left: 20px;
+      }
+      p {
+        color: gray;
+        font-size: 20px;
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Plant Image Prediction</h1>
+    <h2>Image Prediction By Convolutional Neural Networks</h2>
+    <div class="list-container">
+      <ul>
+        <li>
+          CNNs, specifically models like ResNet50, excel at image classification
+          tasks due to their ability to learn spatial hierarchies of features.
+          ResNet50 stands out with its deep residual connections that allow
+          training of very deep networks without suffering from vanishing
+          gradients, enabling us to leverage high-level abstract features for
+          accurate predictions.
+        </li>
+        <li>
+          The process begins with pre-processing the input image to match the
+          expected input size of the ResNet50 model. This often involves
+          resizing the image and normalizing pixel values. Once processed, the
+          image is passed through the network layers, which extract features at
+          various levels of abstraction. The final layer outputs a probability
+          distribution over predefined classes, typically including numerous
+          categories of plants.
+        </li>
+        <li>
+          Training such a model requires a large dataset of labeled images. For
+          plant identification, datasets might include images of leaves,
+          flowers, fruits, and stems of various species. During training, the
+          model learns to associate these visual patterns with their
+          corresponding labels. After training, the model can predict the class
+          of a new, unseen plant image based on what it has learned.
+        </li>
+        <li>
+          One of the key advantages of using a pre-trained model like ResNet50
+          is that it has been trained on a vast amount of data, allowing it to
+          generalize well to new tasks with minimal retraining. This makes it
+          particularly useful for applications in botany and agriculture, where
+          identifying plant species accurately can aid in research, conservation
+          efforts, and crop management.
+        </li>
+      </ul>
+    </div>
+    <div class="horizontal-line"></div>
+    <h2 class="prediction-title">Your Plant's Prediction....</h2>
+    <div id="prediction-result"></div>
+    <!-- Updated div for displaying prediction result -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var predictionDetailsDiv = document.getElementById("prediction-result");
+        var predictionData = JSON.parse("{{ data | safe }}"); // Parse the JSON string
+
+        if (predictionData && predictionData.length > 0) {
+          var parsedData = predictionData[0]; // Assuming you want to display the first item
+          predictionDetailsDiv.innerHTML = `
+                  <p>Name: ${parsedData.Name}<br>
+                  Type: ${parsedData.Type}<br>
+                  Use: ${parsedData.Use}<br>
+                  Location: ${parsedData.Location}<br>
+                  Link: <a href="${parsedData.Link}" target="_blank">${parsedData.Link}</a></p>`;
+        } else {
+          predictionDetailsDiv.innerHTML = "<p>No prediction data found.</p>";
+        }
+      });
+    </script>
+  </body>
+</html>

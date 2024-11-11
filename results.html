@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Results</title>
+  </head>
+  <body>
+    <h1>Plant Information</h1>
+    {% for item in data %}
+    <div class="result-item">
+      <p>Name: {{ item.Name }}</p>
+      <p>Type: {{ item.Type }}</p>
+      <p>Use: {{ item.Use }}</p>
+      <p>Location: {{ item.Location }}</p>
+      <p><a href="{{ item.Link }}">Buy now..</a></p>
+    </div>
+    {% endfor %}
+  </body>
+</html>

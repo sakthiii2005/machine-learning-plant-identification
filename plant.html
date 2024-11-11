@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medicinal Plant Identification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        color: white;
+      }
+
+      header,
+      section,
+      footer {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: black;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      header h1,
+      section h2 {
+        color: lime;
+        text-align: center;
+      }
+
+      section {
+        margin-top: 20px;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding-left: 30px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+      }
+
+      ul li::before {
+        content: "\2022";
+        color: lime;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      #uploadImageButton {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+
+      img.selectedImage {
+        max-width: 100%;
+        height: auto;
+        border: 3px solid lime;
+        display: block;
+        margin: 20px auto;
+      }
+
+      .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      #predictButton {
+        display: none; /* Initially hidden */
+        margin-top: 20px;
+        background-color: white; /* Button background color */
+        color: black; /* Text color */
+        border: none; /* Remove default button border */
+        border-radius: 20px; /* Rounded corners with 20px radius */
+        cursor: pointer; /* Cursor changes to pointer on hover */
+        padding: 10px 20px; /* Padding inside the button */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Medicinal Plant Identification</h1>
+      <p>
+        This app is designed to help users discover the incredible world of
+        medicinal plants and their many benefits. By harnessing advanced
+        technology, we empower researchers, healthcare professionals, and nature
+        enthusiasts alike to unlock the full potential of nature's pharmacy.
+      </p>
+    </header>
+
+    <section>
+      <h2>Advancing Plant Based Medicine</h2>
+      <ul>
+        <li>
+          Explore the rich diversity of medicinal plants found in various
+          ecological regions.
+        </li>
+        <li>
+          Scientific Rigor: Employ cutting edge technologies and scientific
+          methodologies to validate the efficacy of plant-based treatments.
+        </li>
+        <li>
+          Collaborative Efforts: Foster interdisciplinary partnerships to drive
+          advancements in plant-based medicine and healthcare solutions.
+        </li>
+        <li>
+          Sustainable Practices: Promote the sustainable cultivation and
+          utilization of medicinal plants to ensure their long-term
+          availability.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Identify and Classify Medicinal Plants</h2>
+      <ul>
+        <li>
+          The project utilizes a Convolutional Neural Network (CNN) model,
+          specifically ResNet50, to accurately identify and classify medicinal
+          plants from user-provided images.
+        </li>
+        <li>
+          The backend is powered by a SQL database that stores comprehensive
+          information about the identified medicinal plants, including their
+          uses, benefits, and applications.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Predict Your Plant</h2>
+      <div class="center-content">
+        <input
+          type="file"
+          id="fileInput"
+          style="display: none"
+          accept="image/*"
+        />
+        <button id="uploadImageButton">Upload Image</button>
+        <div id="imageContainer"></div>
+        <button id="predictButton" style="margin-top: 20px">
+          Predict Plant
+        </button>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2021 Medicinal Plant Identification. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const uploadImageButton = document.getElementById("uploadImageButton");
+        const predictButton = document.getElementById("predictButton");
+        const imageContainer = document.getElementById("imageContainer");
+        const fileInput = document.querySelector("#fileInput");
+
+        uploadImageButton.addEventListener("click", function () {
+          fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function (event) {
+          if (event.target.files.length > 0) {
+            const file = event.target.files[0];
+            console.log("Selected file:", file.name);
+
+            window.selectedImage = file;
+
+            const currentImage = document.getElementById("selectedImage");
+            if (currentImage) {
+              imageContainer.removeChild(currentImage);
+            }
+
+            const imgElement = document.createElement("img");
+            imgElement.id = "selectedImage";
+            imgElement.alt = "User uploaded image";
+            imgElement.src = URL.createObjectURL(file);
+            imgElement.style.maxWidth = "255px";
+            imgElement.style.height = "auto";
+
+            imageContainer.appendChild(imgElement);
+
+            predictButton.style.display = "block";
+          }
+        });
+
+        predictButton.addEventListener("click", function () {
+          if (window.selectedImage) {
+            const formData = new FormData();
+            formData.append("image", window.selectedImage);
+            fetch("/", {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => {
+                // Assuming the server responds with a redirect to /results/
+                window.location.href = "/results/";
+              })
+              .catch((error) => {
+                console.error("Error uploading image:", error);
+              });
+          } else {
+            console.log("Please select an image first.");
+            alert("Please select an image first.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Medicinal Plant Identification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        color: white;
+      }
+
+      header,
+      section,
+      footer {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: black;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      header h1,
+      section h2 {
+        color: lime;
+        text-align: center;
+      }
+
+      section {
+        margin-top: 20px;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding-left: 30px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+      }
+
+      ul li::before {
+        content: "\2022";
+        color: lime;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Medicinal Plant Identification</h1>
+      <p>
+        This app is designed to help users discover the incredible world of
+        medicinal plants and their many benefits. By harnessing advanced
+        technology, we empower researchers, healthcare professionals, and nature
+        enthusiasts alike to unlock the full potential of nature's pharmacy.
+      </p>
+    </header>
+
+    <section>
+      <h2>Advancing Plant Based Medicine</h2>
+      <ul>
+        <li>
+          Explore the rich diversity of medicinal plants found in various
+          ecological regions.
+        </li>
+        <li>
+          Scientific Rigor: Employ cutting edge technologies and scientific
+          methodologies to validate the efficacy of plant-based treatments.
+        </li>
+        <li>
+          Collaborative Efforts: Foster interdisciplinary partnerships to drive
+          advancements in plant-based medicine and healthcare solutions.
+        </li>
+        <li>
+          Sustainable Practices: Promote the sustainable cultivation and
+          utilization of medicinal plants to ensure their long-term
+          availability.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Identify and Classify Medicinal Plants</h2>
+      <ul>
+        <li>
+          The project utilizes a Convolutional Neural Network (CNN) model,
+          specifically ResNet50, to accurately identify and classify medicinal
+          plants from user-provided images.
+        </li>
+        <li>
+          The backend is powered by a SQL database that stores comprehensive
+          information about the identified medicinal plants, including their
+          uses, benefits, and applications.
+        </li>
+      </ul>
+    </section>
+
+    <h1>Upload Image</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">Predict Plant</button>
+    </form>
+  </body>
+</html>
